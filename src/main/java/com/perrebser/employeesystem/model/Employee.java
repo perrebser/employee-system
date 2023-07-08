@@ -14,7 +14,7 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private long id;
+    private Long id;
 
     @Column(name = "NAME",nullable = false)
     private String name;
@@ -22,14 +22,14 @@ public class Employee {
     @Column(name = "SURNAME",nullable = false)
     private String surname;
 
-    @Column(name = "EMAIL",nullable = false)
+    @Column(name = "EMAIL",nullable = false,unique = true)
     private String email;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "CONTRACT DATE",nullable = false)
     private Date contractDate;
 
-    @Column(name = "PHONE_NUMBER")
+    @Column(name = "PHONE_NUMBER",unique = true)
     private String phoneNumber;
 
     @Column(name = "CITY")

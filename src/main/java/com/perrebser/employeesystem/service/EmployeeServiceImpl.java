@@ -21,12 +21,12 @@ public class EmployeeServiceImpl implements  EmployeeService {
 
     @Override
     public Employee addEmployee(EmployeeDTO employeeDTO) {
-        return null;
+         return employeeRepository.save(employeeMapper.asEmployee(employeeDTO));
     }
 
     @Override
     public List<EmployeeDTO> getEmployees() {
-        return null;
+        return employeeMapper.asEmployeeDto(employeeRepository.findAll());
     }
 
     @Override
@@ -36,5 +36,14 @@ public class EmployeeServiceImpl implements  EmployeeService {
            throw new EntityNotFoundException();
        }
         return employeeMapper.asEmployeeDto(employee.get());
+    }
+
+    @Override
+    public void deleteEmployee(Long id) {
+        if(employeeRepository.findById(id).isEmpty()){
+            throw new EntityNotFoundException();
+        }else{
+            employeeRepository.deleteById(id);
+        }
     }
 }
