@@ -6,6 +6,7 @@ import com.perrebser.employeesystem.model.Employee;
 import com.perrebser.employeesystem.repository.EmployeeRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +22,10 @@ public class EmployeeServiceImpl implements  EmployeeService {
 
     @Override
     public Employee addEmployee(EmployeeDTO employeeDTO) {
+        if(employeeRepository.findByEmailOrPhoneNumber(employeeDTO.getEmail()
+                ,employeeDTO.getPhoneNumber()).isPresent()){
+            throw new DuplicateKeyException("Already exists");
+        }
          return employeeRepository.save(employeeMapper.asEmployee(employeeDTO));
     }
 
