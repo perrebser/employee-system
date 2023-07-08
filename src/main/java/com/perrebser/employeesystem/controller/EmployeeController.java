@@ -6,7 +6,9 @@ import com.perrebser.employeesystem.model.Employee;
 import com.perrebser.employeesystem.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -31,10 +33,13 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public ResponseEntity<List<EmployeeDTO>> getEmployees(){
-        List<EmployeeDTO> list=employeeService.getEmployees();
-        return ResponseEntity.ok(list);
+    public ModelAndView getEmployees() {
+        ModelAndView modelAndView = new ModelAndView("employees");
+        List<EmployeeDTO> list = employeeService.getEmployees();
+        modelAndView.addObject("employees", list);
+        return modelAndView;
     }
+
 
     @DeleteMapping(value = "/{employeeId}")
     public  ResponseEntity<Void> deleteEmployeeById(@PathVariable  Long employeeId){
