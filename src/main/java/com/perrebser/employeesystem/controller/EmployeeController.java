@@ -3,6 +3,7 @@ package com.perrebser.employeesystem.controller;
 import com.perrebser.employeesystem.dto.EmployeeDTO;
 import com.perrebser.employeesystem.mapper.EmployeeMapper;
 import com.perrebser.employeesystem.model.Employee;
+import com.perrebser.employeesystem.service.DepartmentService;
 import com.perrebser.employeesystem.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -22,6 +25,9 @@ public class EmployeeController {
     @Autowired
     EmployeeMapper employeeMapper;
 
+    @Autowired
+    DepartmentService departmentService;
+
     @GetMapping(value = "/{employeeId}")
     public ResponseEntity<EmployeeDTO> getEmployeeById(@PathVariable Long employeeId){
        return ResponseEntity.ok(employeeService.getEmployee(employeeId));
@@ -29,8 +35,15 @@ public class EmployeeController {
 
     @GetMapping("/new")
     public String showAddEmployeeForm(Model model) {
-        // Aquí puedes realizar cualquier lógica adicional si es necesario
+        model.addAttribute("departments",departmentService.getAllDepartments());
         return "create_employee";
+    }
+
+    @PostMapping("/new")
+    public String addEmployee(@ModelAttribute EmployeeDTO employeeDTO){
+        employeeDTO.setContractDate(Date.from(Instant.now()));
+        employeeService.addEmployee(employeeDTO);
+        return "redirect:/employees/";
     }
 
     @GetMapping(value = "/")

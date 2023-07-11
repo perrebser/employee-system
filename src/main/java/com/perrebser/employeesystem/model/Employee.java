@@ -2,6 +2,7 @@ package com.perrebser.employeesystem.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.OffsetDateTime;
 import java.util.Date;
@@ -26,6 +27,7 @@ public class Employee {
     private String email;
 
     @Temporal(TemporalType.DATE)
+    @CreatedDate
     @Column(name = "CONTRACT DATE",nullable = false)
     private Date contractDate;
 
