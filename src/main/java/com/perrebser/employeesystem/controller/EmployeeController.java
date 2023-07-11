@@ -6,14 +6,15 @@ import com.perrebser.employeesystem.model.Employee;
 import com.perrebser.employeesystem.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
-@RestController
-@RequestMapping(value = "/api/employee")
+@Controller
+@RequestMapping(value = "/employees")
 public class EmployeeController {
     @Autowired
     EmployeeService employeeService;
@@ -26,20 +27,18 @@ public class EmployeeController {
        return ResponseEntity.ok(employeeService.getEmployee(employeeId));
     }
 
-    @PostMapping
-    public ResponseEntity<EmployeeDTO> addEmployee(@RequestBody EmployeeDTO employeeDTO){
-        EmployeeDTO e=employeeMapper.asEmployeeDto(employeeService.addEmployee(employeeDTO));
-        return ResponseEntity.ok(e);
+    @GetMapping("/new")
+    public String showAddEmployeeForm(Model model) {
+        // Aquí puedes realizar cualquier lógica adicional si es necesario
+        return "create_employee";
     }
 
-    @GetMapping
+    @GetMapping(value = "/")
     public ModelAndView getEmployees() {
-        ModelAndView modelAndView = new ModelAndView("employees");
-        List<EmployeeDTO> list = employeeService.getEmployees();
-        modelAndView.addObject("employees", list);
-        return modelAndView;
+        ModelAndView mvw=new ModelAndView("employees");
+        mvw.addObject("employees",employeeService.getEmployees());
+        return mvw;
     }
-
 
     @DeleteMapping(value = "/{employeeId}")
     public  ResponseEntity<Void> deleteEmployeeById(@PathVariable  Long employeeId){
