@@ -1,3 +1,3 @@
 # employee-system
-CRUD app with spring-boot
+A CRUD app for practicing Thymeleaf and Spring
 
