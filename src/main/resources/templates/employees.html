@@ -36,7 +36,7 @@
         <td th:text="${employee.department.name}"></td>
         <td>
             <button type="button" class="btn btn-primary btn-small" data-bs-toggle="modal"  th:data-bs-target="'#editModal-' + ${employee.id}">Edit</button>
-            <button type="button" class="btn btn-danger btn-small" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
+            <button type="button" class="btn btn-danger btn-small" data-bs-toggle="modal" th:data-bs-target="'#deleteModal-' + ${employee.id}">Delete</button>
         </td>
     </tr>
     </tbody>
@@ -67,24 +67,29 @@
     </div>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+<!-- Modales para cada empleado -->
+<div th:each="employee : ${employees}">
+    <div class="modal fade" th:id="'deleteModal-' + ${employee.id}" tabindex="-1" role="dialog" th:attr="aria-labelledby='deleteModalLabel-' + ${employee.id}" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 th:id="'deleteModalLabel-' + ${employee.id}">Delete employee: <span th:text="${employee.name}"></span></h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h3>Do you want to delete employee:<span th:text="${employee.name}"></span><span th:text="${employee.surname}"></span>?</h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" th:href="@{/pathvars/employee/{id}(id = ${employee.id})}">Yes delete Employee</button>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
