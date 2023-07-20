@@ -51,4 +51,11 @@ public class EmployeeServiceImpl implements  EmployeeService {
             employeeRepository.deleteById(id);
         }
     }
+
+    @Override
+    public EmployeeDTO updateEmployee(EmployeeDTO employeeDTO) {
+        Employee e=employeeMapper.asEmployee(employeeDTO);
+        Employee save=employeeRepository.save(e);
+        return employeeMapper.asEmployeeDto(save);
+    }
 }

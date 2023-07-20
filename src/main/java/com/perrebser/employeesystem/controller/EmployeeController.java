@@ -53,6 +53,18 @@ public class EmployeeController {
         return mvw;
     }
 
+    @GetMapping(value = "/edit/{employeeId}")
+    public String showEditEmployeeForm(@PathVariable Long employeeId, Model model){
+        EmployeeDTO employeeDTO = employeeService.getEmployee(employeeId);
+        model.addAttribute("employee", employeeDTO);
+        return "edit_employee";
+    }
+    @PostMapping("/edit")
+    public String editEmployee(@ModelAttribute EmployeeDTO employeeDTO) {
+        employeeService.updateEmployee(employeeDTO);
+        return "redirect:/employees/";
+    }
+
     @PostMapping(value = "/delete/{employeeId}")
     public String deleteEmployeeById(@ModelAttribute("employeeId") Long employeeId){
         employeeService.deleteEmployee(employeeId);

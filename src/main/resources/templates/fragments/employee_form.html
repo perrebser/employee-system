@@ -15,7 +15,7 @@
                 type = "text"
                 name = "name"
                 class = "form-control"
-                placeholder="Enter employee name"
+                th:placeholder="${employee.name} ?: 'Enter employee name'"
                 required
         />
     </div>
@@ -36,7 +36,6 @@
         <input
                 type = "text"
                 name = "email"
-
                 class = "form-control"
                 placeholder="Enter Employee Email"
                 required
