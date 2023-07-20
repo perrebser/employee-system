@@ -53,9 +53,9 @@ public class EmployeeController {
         return mvw;
     }
 
-    @DeleteMapping(value = "/{employeeId}")
-    public  ResponseEntity<Void> deleteEmployeeById(@PathVariable  Long employeeId){
+    @PostMapping(value = "/delete/{employeeId}")
+    public String deleteEmployeeById(@ModelAttribute("employeeId") Long employeeId){
         employeeService.deleteEmployee(employeeId);
-        return ResponseEntity.ok().build();
+        return "redirect:/employees/";
     }
 }

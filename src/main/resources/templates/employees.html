@@ -83,7 +83,9 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" th:href="@{/pathvars/employee/{id}(id = ${employee.id})}">Yes delete Employee</button>
+                    <form th:action="@{/employees/delete/{id}(id=${employee.id})}" method="post">
+                        <button type="submit" class="btn btn-primary">Yes delete Employee</button>
+                    </form>
                 </div>
             </div>
         </div>
