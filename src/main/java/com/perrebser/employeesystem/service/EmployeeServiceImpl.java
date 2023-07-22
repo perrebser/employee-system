@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class EmployeeServiceImpl implements  EmployeeService {
+public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     EmployeeRepository employeeRepository;
 
@@ -22,11 +22,11 @@ public class EmployeeServiceImpl implements  EmployeeService {
 
     @Override
     public Employee addEmployee(EmployeeDTO employeeDTO) {
-        if(employeeRepository.findByEmailOrPhoneNumber(employeeDTO.getEmail()
-                ,employeeDTO.getPhoneNumber()).isPresent()){
+        if (employeeRepository.findByEmailOrPhoneNumber(employeeDTO.getEmail()
+                , employeeDTO.getPhoneNumber()).isPresent()) {
             throw new DuplicateKeyException("Already exists");
         }
-         return employeeRepository.save(employeeMapper.asEmployee(employeeDTO));
+        return employeeRepository.save(employeeMapper.asEmployee(employeeDTO));
     }
 
     @Override
@@ -36,26 +36,32 @@ public class EmployeeServiceImpl implements  EmployeeService {
 
     @Override
     public EmployeeDTO getEmployee(Long id) {
-       Optional<Employee> employee=employeeRepository.findById(id);
-       if(employee.isEmpty()){
-           throw new EntityNotFoundException();
-       }
+        Optional<Employee> employee = employeeRepository.findById(id);
+        if (employee.isEmpty()) {
+            throw new EntityNotFoundException();
+        }
         return employeeMapper.asEmployeeDto(employee.get());
     }
 
     @Override
     public void deleteEmployee(Long id) {
-        if(employeeRepository.findById(id).isEmpty()){
+        if (employeeRepository.findById(id).isEmpty()) {
             throw new EntityNotFoundException();
-        }else{
+        } else {
             employeeRepository.deleteById(id);
         }
     }
 
     @Override
-    public EmployeeDTO updateEmployee(EmployeeDTO employeeDTO) {
-        Employee e=employeeMapper.asEmployee(employeeDTO);
-        Employee save=employeeRepository.save(e);
+    public EmployeeDTO updateEmployee(EmployeeDTO employeeDTO,Long employeeId) {
+        Optional<Employee> employeeDB=employeeRepository.findById(employeeId);
+        employeeDB.get().setCity(employeeDTO.getCity());
+        employeeDB.get().setEmail(employeeDTO.getEmail());
+        employeeDB.get().setName(employeeDTO.getName());
+        employeeDB.get().setSurname(employeeDTO.getSurname());
+        employeeDB.get().setPhoneNumber(employeeDTO.getPhoneNumber());
+        employeeDB.get().setJobTitle(employeeDTO.getJobTitle());
+        Employee save = employeeRepository.save(employeeDB.get());
         return employeeMapper.asEmployeeDto(save);
     }
 }

@@ -59,9 +59,9 @@ public class EmployeeController {
         model.addAttribute("employee", employeeDTO);
         return "edit_employee";
     }
-    @PostMapping("/edit")
-    public String editEmployee(@ModelAttribute EmployeeDTO employeeDTO) {
-        employeeService.updateEmployee(employeeDTO);
+    @PostMapping("/edit/{employeeId}")
+    public String editEmployee(@ModelAttribute EmployeeDTO employeeDTO,@PathVariable Long employeeId) {
+        employeeService.updateEmployee(employeeDTO,employeeId);
         return "redirect:/employees/";
     }
 

@@ -8,7 +8,7 @@
           crossorigin="anonymous">
 </head>
 <header>
-    <div th:insert="fragments/header :: header">
+    <div th:insert="~{fragments/header :: header}">
     </div>
 </header>
 <body>
@@ -25,6 +25,7 @@
                                 name = "name"
                                 class = "form-control"
                                 th:placeholder="${employee.name} ?: 'Enter employee name'"
+                                th:field="${employee.name}"
                                 required
                         />
                     </div>
@@ -35,7 +36,8 @@
                                 type = "text"
                                 name = "surname"
                                 class = "form-control"
-                                th:placeholder="${employee.surname} ?: 'Enter employee name'"
+                                th:placeholder="${employee.surname} ?: 'Enter employee last name'"
+                                th:field="${employee.surname}"
                                 required
                         />
                     </div>
@@ -46,7 +48,8 @@
                                 type = "text"
                                 name = "email"
                                 class = "form-control"
-                                th:placeholder="${employee.email} ?: 'Enter employee name'"
+                                th:placeholder="${employee.email} ?: 'Enter email'"
+                                th:field="${employee.email}"
                                 required
                         />
                     </div>
@@ -55,37 +58,28 @@
                         <input
                                 type = "text"
                                 name = "city"
-
+                                th:field="${employee.city}"
                                 class = "form-control"
-                                th:placeholder="${employee.city} ?: 'Enter employee name'"
+                                th:placeholder="${employee.city} ?: 'Enter city'"
 
                         />
                     </div>
                     <div class ="form-group">
                         <label> Phone Number </label>
                         <input
-                                type = "number"
+                                type = "tel"
                                 name = "phoneNumber"
                                 class = "form-control"
-                                th:placeholder="${employee.phoneNumber} ?: 'Enter employee name'"
+                                th:placeholder="${employee.phoneNumber} ?: 'Enter employee phone number'"
+                                pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}"
+                                th:field="${employee.phoneNumber}"
                                 required
                         />
-                    </div>
-                    <div class ="form-group">
-                        <label> Department</label>
-                        <select
-                                name = "department"
-                                class = "form-control"
-                        >
-                            <option
-                                    th:value="${employee.department}" th:text="${employee.department.name}"></option>
-                        </select>
                     </div>
                     <div class ="form-group">
                         <label> Job Title </label>
                         <select
                                 name = "jobTitle"
-
                                 class = "form-control"
                         >
                             <option>FrontEnd Developer</option>
